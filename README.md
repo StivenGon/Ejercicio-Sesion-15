@@ -6,7 +6,7 @@ Ejercicio realizados con el IDE NetBean el 27 de diciembre de manera virtual, pe
 - Implementación de mas ventanas
 - Ventana de recursos Humanos
 - Ventana de compras
-- Pendiente a correción de fallos en la ventana de compras y su almacenaje de datos
+- Corregido errores en el GUI de Compras
 ### Contenido
 
 - Codigo Ventana Medicamentos: [Medicamentos](Practica10/src/ventanas/DialogGestionMedicamentos.java)
