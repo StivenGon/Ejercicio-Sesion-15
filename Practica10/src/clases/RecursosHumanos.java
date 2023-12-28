@@ -2,7 +2,6 @@
  * @author Stiven Gonzalez
  * 
  */
-
 package clases;
 
 import javax.swing.*;
