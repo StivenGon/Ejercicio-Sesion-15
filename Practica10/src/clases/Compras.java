@@ -5,26 +5,25 @@
 
 package clases;
 
-import java.io.*;
-import java.util.StringJoiner;
-import javax.swing.JOptionPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.io.*;
+import java.util.List;
+import java.util.StringJoiner;
 
 public class Compras {
 
-    private String codigoCompra;
+    private String codigo;
     private String nombreArticulo;
-    private String descripcionCompra;
-    private String precioCompra;
-    
-    public String getCodigoCompra() {
-        return codigoCompra;
+    private String Descripcion;
+    private String Precio;
+
+    public String getCodigo() {
+        return codigo;
     }
 
-    public void setCodigoCompra(String codigoCompra) {
-        this.codigoCompra = codigoCompra;
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
 
     public String getNombreArticulo() {
@@ -35,23 +34,23 @@ public class Compras {
         this.nombreArticulo = nombreArticulo;
     }
 
-    public String getDescripcionCompra() {
-        return descripcionCompra;
+    public String getDescripcion() {
+        return Descripcion;
     }
 
-    public void setDescripcionCompra(String descripcionCompra) {
-        this.descripcionCompra = descripcionCompra;
+    public void setDescripcion(String Descripcion) {
+        this.Descripcion = Descripcion;
     }
 
-    public String getPrecioCompra() {
-        return precioCompra;
+    public String getPrecio() {
+        return Precio;
     }
 
-    public void setPrecioCompra(String precioCompra) {
-        this.precioCompra = precioCompra;
+    public void setPrecio(String Precio) {
+        this.Precio = Precio;
     }
 
-    public void crearArchivoCompras() {
+    public void crearArchivoRecursosHumanos() {
         try {
             File objetoArchivo = new File("Compras.txt");
             if (objetoArchivo.createNewFile()) {
@@ -59,21 +58,26 @@ public class Compras {
             } else {
                 JOptionPane.showMessageDialog(null, "El archivo ya existe");
             }
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ocurrió un error al crear el archivo");
         }
     }
 
     public void agregarRegistrosCompras() {
-        try (FileWriter fw = new FileWriter("Compras.txt", true)) {
-            fw.write(getCodigoCompra());
+        try {
+            FileWriter fw = new FileWriter("Compras.txt", true);
+
+            fw.write(getCodigo());
             fw.write(",");
             fw.write(getNombreArticulo());
             fw.write(",");
-            fw.write(getDescripcionCompra());
+            fw.write(getDescripcion());
             fw.write(",");
-            fw.write(getPrecioCompra());
+            fw.write(getPrecio());
             fw.write("\n");
+            fw.close();
+
             JOptionPane.showMessageDialog(null, "Se registró correctamente");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ocurrió un error al registrar" + e.toString());
@@ -86,49 +90,56 @@ public class Compras {
 
         try {
             BufferedReader br = new BufferedReader(new FileReader(file));
+
             String primeraLinea = br.readLine().trim();
+
             DefaultTableModel model = new DefaultTableModel();
+
             model.addColumn("Codigo");
             model.addColumn("NombreArticulo");
-            model.addColumn("DescripcionCompra");
-            model.addColumn("PrecioCompra");
+            model.addColumn("Descripcion");
+            model.addColumn("Precio");
+
             tablaTotalCompras.setModel(model);
 
             Object[] tableLines = br.lines().toArray();
 
             for (int i = 0; i < tableLines.length; i++) {
                 String line = tableLines[i].toString().trim();
-                String[] dataRow = line.split(",");
-                model.addRow(dataRow);
+                String[] datarow = line.split(",");
+                model.addRow(datarow);
                 tablaTotalCompras.setModel(model);
             }
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ocurrió un error" + e.toString());
         }
     }
 
-    public void seleccionarCompra(JTable tablaCompras) {
+    public void seleccionarCompras(JTable tablaCompras) {
         try {
             int fila = tablaCompras.getSelectedRow();
+
             if (fila >= 0) {
-                setCodigoCompra(tablaCompras.getValueAt(fila, 0).toString());
+                setCodigo(tablaCompras.getValueAt(fila, 0).toString());
                 setNombreArticulo(tablaCompras.getValueAt(fila, 1).toString());
-                setDescripcionCompra(tablaCompras.getValueAt(fila, 2).toString());
-                setPrecioCompra(tablaCompras.getValueAt(fila, 3).toString());
+                setDescripcion(tablaCompras.getValueAt(fila, 2).toString());
+                setPrecio(tablaCompras.getValueAt(fila, 3).toString());
             }
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ocurrió un error" + e.toString());
         }
     }
 
-    public void eliminarCompra(JTable tablaCompras, JTextField codigoCompra) {
+public void EliminarCompras (JTable tablaCompras, JTextField codigo) {
 	
 	//Eliminacion visual de la tabla
 	DefaultTableModel model = (DefaultTableModel)tablaCompras.getModel();
 	
 	for (int i = 0; i < model.getRowCount(); i++) {
 		
-		if(((String)model.getValueAt(i, 0)).equals(codigoCompra.getText())) {	
+		if(((String)model.getValueAt(i, 0)).equals(codigo.getText())) {	
 			model.removeRow(i);
 			break;
 			
@@ -145,7 +156,7 @@ public class Compras {
 		JOptionPane.showMessageDialog(null,"Ocurrió un problema"+ e.toString());
 	}
 	
-	//Creaci�n de los nuevos registros luego de la eliminaci�n
+	//Creacion de los nuevos registros luego de la eliminaci�n
 	
 	try (BufferedWriter bw = new BufferedWriter(new FileWriter(new File("Compras.txt")))) {
 		StringJoiner joiner = new StringJoiner(",");
@@ -183,7 +194,7 @@ public class Compras {
 	
 }
 
-    public void editarCompra(JTable tablaCompras) {
+public void EditarCompras(JTable tablaCompras) {
 	
 	//Limpieza del archivo .txt
 	
@@ -195,35 +206,30 @@ public class Compras {
 			JOptionPane.showMessageDialog(null,"Ocurrio un problema"+ e.toString());
 		}
 		
-		//Creaci�n de los nuevos registros luego de la eliminaci�n
+		//Creacion de los nuevos registros luego de la eliminaci�n
 		
 		try (BufferedWriter bw = new BufferedWriter(new FileWriter(new File("Compras.txt")))) {
 			StringJoiner joiner = new StringJoiner(",");
 			for (int col = 0; col < tablaCompras.getColumnCount(); col++) {
 				joiner.add(tablaCompras.getColumnName(col));
-			}
-			
+			}			
 			System.out.println(joiner.toString());
 			bw.write(joiner.toString());
-			bw.newLine();
-			
+			bw.newLine();			
 			for (int row = 0; row < tablaCompras.getRowCount(); row++) {
 				joiner = new StringJoiner(",");
-				for (int col = 0; col < tablaCompras.getColumnCount(); col++) {
-					
+				for (int col = 0; col < tablaCompras.getColumnCount(); col++) {					
 					Object obj = tablaCompras.getValueAt(row, col);
 					String value = obj == null ? "null" :obj.toString();
-					joiner.add(value);
-					
-				}
-				
+					joiner.add(value);					
+				}			
 				System.out.println(joiner.toString());
 				bw.write(joiner.toString());
 				bw.newLine();
 				JOptionPane.showMessageDialog(null, "Se modifico correctamente");
-			}	
+			}		
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Ocurrio un error");
-		}	
+		}		
 }
 }

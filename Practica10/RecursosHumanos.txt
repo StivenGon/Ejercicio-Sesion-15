@@ -1,4 +1,3 @@
 Codigo,NombreApellido,Cargo,Especialidad
 2,Flor,Jefe Marketing,Negocios
 3,Kevin.R,Gestion,Finanzas
-1,Stiven,Programador,Java

@@ -5,22 +5,18 @@
 
 package ventanas;
 
-import clases.Compras;
-
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
-import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class DialogGestionCompras extends JDialog {
-    private JTextField txtCodigoCompra;
+    private JTextField txtCodigo;
     private JTextField txtNombreArticulo;
-    private JTextField txtDescripcionCompra;
-    private JTextField txtPrecioCompra;
+    private JTextField txtDescripcion;
+    private JTextField txtPrecio;
     private JTable tbListaCompras;
-    private Compras compras;
-
+    
     public static void main(String[] args) {
         try {
             DialogGestionCompras dialog = new DialogGestionCompras();
@@ -32,68 +28,67 @@ public class DialogGestionCompras extends JDialog {
     }
 
     public DialogGestionCompras() {
-        setTitle("GESTION DE COMPRAS");
-        setBounds(100, 100, 750, 330);
-        getContentPane().setLayout(null);
+setTitle("GESTION DE COMPRAS");
+setBounds(100, 100, 750, 330);
+getContentPane().setLayout(null);
 
-        compras = new Compras();
-        compras.crearArchivoCompras(); // Asegura la creación del archivo
+JPanel panel = new JPanel();
+panel.setBorder(new TitledBorder(null, "Datos de Compras", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+panel.setBounds(10, 55, 239, 260);
+getContentPane().add(panel);
+panel.setLayout(null);
 
-        JPanel panel = new JPanel();
-        panel.setBorder(new TitledBorder(null, "Datos de Compra", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-        panel.setBounds(10, 55, 239, 260);
-        getContentPane().add(panel);
-        panel.setLayout(null);
+txtCodigo = new JTextField();
+txtCodigo.setBounds(132, 24, 86, 20);
+panel.add(txtCodigo);
+txtCodigo.setColumns(10);
 
-        txtCodigoCompra = new JTextField();
-        txtCodigoCompra.setBounds(132, 24, 86, 20);
-        panel.add(txtCodigoCompra);
-        txtCodigoCompra.setColumns(10);
+JLabel lblNewLabel_3 = new JLabel("Codigo");
+lblNewLabel_3.setBounds(10, 27, 46, 14);
+panel.add(lblNewLabel_3);
 
-        JLabel lblNewLabel_3 = new JLabel("Codigo");
-        lblNewLabel_3.setBounds(10, 27, 46, 14);
-        panel.add(lblNewLabel_3);
+JLabel lblNewLabel_4 = new JLabel("Nombre Articulo");
+lblNewLabel_4.setBounds(10, 68, 112, 14);
+panel.add(lblNewLabel_4);
 
-        JLabel lblNewLabel_4 = new JLabel("Nombre Articulo");
-        lblNewLabel_4.setBounds(10, 68, 112, 14);
-        panel.add(lblNewLabel_4);
+JLabel lblNewLabel_5 = new JLabel("Descripcion");
+lblNewLabel_5.setBounds(10, 106, 112, 14);
+panel.add(lblNewLabel_5);
 
-        JLabel lblNewLabel_5 = new JLabel("Descripción");
-        lblNewLabel_5.setBounds(10, 106, 112, 14);
-        panel.add(lblNewLabel_5);
+txtNombreArticulo = new JTextField();
+txtNombreArticulo.setBounds(132, 65, 86, 20);
+panel.add(txtNombreArticulo);
+txtNombreArticulo.setColumns(10);
 
-        txtNombreArticulo = new JTextField();
-        txtNombreArticulo.setBounds(132, 65, 86, 20);
-        panel.add(txtNombreArticulo);
-        txtNombreArticulo.setColumns(10);
+txtDescripcion = new JTextField();
+txtDescripcion.setBounds(132, 103, 86, 20);
+panel.add(txtDescripcion);
+txtDescripcion.setColumns(10);
 
-        txtDescripcionCompra = new JTextField();
-        txtDescripcionCompra.setBounds(132, 103, 86, 20);
-        panel.add(txtDescripcionCompra);
-        txtDescripcionCompra.setColumns(10);
+JLabel lblNewLabel_6 = new JLabel("Precio");
+lblNewLabel_6.setBounds(10, 143, 112, 14);
+panel.add(lblNewLabel_6);
 
-        JLabel lblNewLabel_6 = new JLabel("Precio");
-        lblNewLabel_6.setBounds(10, 143, 112, 14);
-        panel.add(lblNewLabel_6);
-
-        txtPrecioCompra = new JTextField();
-        txtPrecioCompra.setBounds(132, 140, 86, 20);
-        panel.add(txtPrecioCompra);
-        txtPrecioCompra.setColumns(10);
+txtPrecio = new JTextField();
+txtPrecio.setBounds(132, 140, 86, 20);
+panel.add(txtPrecio);
+txtPrecio.setColumns(10);
 
         JButton btnGuardar = new JButton("Guardar");
         btnGuardar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 clases.Compras objetoCompras = new clases.Compras();
-                objetoCompras.setCodigoCompra(txtCodigoCompra.getText());
+                objetoCompras.setCodigo(txtCodigo.getText());
                 objetoCompras.setNombreArticulo(txtNombreArticulo.getText());
-                objetoCompras.setDescripcionCompra(txtDescripcionCompra.getText());
-                objetoCompras.setPrecioCompra(txtPrecioCompra.getText());
+                objetoCompras.setDescripcion(txtDescripcion.getText());
+                objetoCompras.setPrecio(txtPrecio.getText());
+                // ver este aca
                 objetoCompras.agregarRegistrosCompras();
-                txtCodigoCompra.setText("");
+                //
+                txtCodigo.setText("");
                 txtNombreArticulo.setText("");
-                txtDescripcionCompra.setText("");
-                txtPrecioCompra.setText("");
+                txtDescripcion.setText("");
+                txtPrecio.setText("");
                 objetoCompras.mostrarTotalCompras(tbListaCompras);
             }
         });
@@ -103,10 +98,10 @@ public class DialogGestionCompras extends JDialog {
         JButton btnEditar = new JButton("Editar");
         btnEditar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                clases.RecursosHumanos objetoRecursosHumanos = new clases.RecursosHumanos();
+                clases.Compras objetoCompras = new clases.Compras();
                 if (tbListaCompras.getSelectedRow() >= 0) {
-                    objetoRecursosHumanos.EditarRecursosHumanos(tbListaCompras);
-                    objetoRecursosHumanos.mostrarTotalRecursosHumanos(tbListaCompras);
+                    objetoCompras.EditarCompras(tbListaCompras);
+                    objetoCompras.mostrarTotalCompras(tbListaCompras);
                 } else {
                     JOptionPane.showMessageDialog(null, "Seleccione una fila para editar.");
                 }
@@ -115,12 +110,13 @@ public class DialogGestionCompras extends JDialog {
         btnEditar.setBounds(10, 200, 99, 23);
         panel.add(btnEditar);
 
-        JButton btnEliminar = new JButton("Eliminar");
+		JButton btnEliminar = new JButton("Eliminar");
 		btnEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				clases.RecursosHumanos objetoRecursosHumanos = new clases.RecursosHumanos();
-				objetoRecursosHumanos.EliminarRecursosHumanos(tbListaCompras, txtCodigoCompra);
+				clases.Compras objetoCompras = new clases.Compras();
+				objetoCompras.EliminarCompras(tbListaCompras, txtCodigo);
 			}
+		
         });
         btnEliminar.setBounds(119, 200, 99, 23);
         panel.add(btnEliminar);
@@ -138,15 +134,17 @@ public class DialogGestionCompras extends JDialog {
         tbListaCompras = new JTable();
         scrollPane.setViewportView(tbListaCompras);
 
-        JButton btnCrearArchivoCompra = new JButton("Crear Archivo de Compras");
-        btnCrearArchivoCompra.addActionListener(new ActionListener() {
+        JButton btnCrearArchivoCompras = new JButton("Crear Archivo de Compras");
+        btnCrearArchivoCompras.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 clases.Compras objetoCompras = new clases.Compras();
-                objetoCompras.crearArchivoCompras();
+                // ver este tambien
+                objetoCompras.crearArchivoRecursosHumanos();
+                //
             }
         });
-        btnCrearArchivoCompra.setBounds(10, 21, 255, 23);
-        getContentPane().add(btnCrearArchivoCompra);
+        btnCrearArchivoCompras.setBounds(10, 21, 255, 23);
+        getContentPane().add(btnCrearArchivoCompras);
 
         JButton btnMostrarCompras = new JButton("Mostrar Compras");
         btnMostrarCompras.addActionListener(new ActionListener() {
@@ -162,11 +160,11 @@ public class DialogGestionCompras extends JDialog {
         btnSeleccionar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 clases.Compras objetoCompras = new clases.Compras();
-                objetoCompras.seleccionarCompra(tbListaCompras);
-                txtCodigoCompra.setText(objetoCompras.getCodigoCompra());
+                objetoCompras.seleccionarCompras(tbListaCompras);
+                txtCodigo.setText(objetoCompras.getCodigo());
                 txtNombreArticulo.setText(objetoCompras.getNombreArticulo());
-                txtDescripcionCompra.setText(objetoCompras.getDescripcionCompra());
-                txtPrecioCompra.setText(objetoCompras.getPrecioCompra());
+                txtDescripcion.setText(objetoCompras.getDescripcion());
+                txtPrecio.setText(objetoCompras.getPrecio());
             }
         });
         btnSeleccionar.setBounds(480, 20, 220, 23);

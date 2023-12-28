@@ -1,3 +1,9 @@
+/**
+ * @author Stiven Gonzalez
+ * 
+ */
+
+
 package ventanas;
 
 import javax.swing.*;

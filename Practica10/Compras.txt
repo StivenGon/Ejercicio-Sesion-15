@@ -1,5 +1,2 @@
-codigoCompras,nombreProducto,DescripcionProducto,Precio1,Souvenir,Canasta navidad,95000
-,,,
-1,Souvenir,Canasta Navidad,95000
-,,,
-,,,
+Codigo,NombreArticulo,Descripcion,Precio
+1,test,test,test
